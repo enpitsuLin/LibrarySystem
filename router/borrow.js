@@ -15,13 +15,12 @@ router.get("/borrow", (req, res) => {
 });
 
 router.get("/borrow/count", (req, res) => {
-    Borrow.count({}, function (err, res) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(res); // 会输出数据库数据的数量
-        }
-    });
+    Borrow.countDocuments({})
+        .then(book =>{
+            res.json(book)
+        }).catch(err => {
+            res.json(err);
+        });;
 })
 
 router.get("/borrow/:id", (req, res) => {

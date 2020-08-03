@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false)
+
 var DB_URL = 'mongodb://localhost:27017/library';
 
 /* 链接 */

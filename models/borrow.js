@@ -8,6 +8,6 @@ const borrowSchema = mongoose.Schema({
     user_id: Number,
     book_id: Number,
     borrow_date: Date
-}, { collection: 'borrow' })
+}, { versionKey: false }, { collection: 'borrow' })
 
-module.exports = mongoose.model('borrow',borrowSchema);
+module.exports = mongoose.model('borrow', borrowSchema);

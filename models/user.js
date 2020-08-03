@@ -14,6 +14,6 @@ const userSchema = mongoose.Schema({
   identity: Number,
   name: String,
   department: String
-}, { collection: 'users' })
+}, { versionKey: false }, { collection: 'users' })
 
-module.exports = mongoose.model('user',userSchema);
+module.exports = mongoose.model('user', userSchema);

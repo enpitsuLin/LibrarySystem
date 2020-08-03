@@ -14,7 +14,9 @@ router.get("/user", (req, res) => {
             res.json(err);
         });
 });
-
+/**
+ * 获得用户计数
+ */
 router.get("/user/count", (req, res) => {
     User.countDocuments({})
         .then(user => {

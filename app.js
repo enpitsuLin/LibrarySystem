@@ -1,12 +1,15 @@
 /*  app.js */
 const express = require('express')
-const app = express()
 const book = require('./router/book')
+const bodyParser = require("body-parser");
 
-//定义简单路由
-/* app.use('/', (req, res) => {
-  res.send('Yo!')
-}) */
+const app = express()
+
+// 使用 body-parser 中间
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 app.use('/api', book)
 
 //定义服务启动端口

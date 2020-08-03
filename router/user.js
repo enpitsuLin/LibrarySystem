@@ -17,7 +17,7 @@ router.get("/user", (req, res) => {
 
 router.get("/user/count", (req, res) => {
     User.countDocuments({})
-        .then(user =>{
+        .then(user => {
             res.json(user)
         }).catch(err => {
             res.json(err);

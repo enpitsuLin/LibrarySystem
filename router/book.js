@@ -62,8 +62,8 @@ router.put("/book/:id", (req, res) => {
                 book_name: req.body.book_name,
                 author: req.body.author,
                 publish: req.body.publish,
-                price: req.body.price
-
+                price: req.body.price,
+                class: req.body.class
             }
         },
         {

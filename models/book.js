@@ -5,6 +5,7 @@ const mongoose = require('../db');
  * author 作者
  * publish 出版社,
  * price 售价
+ * class 类别
  */
 
 const bookSchema = new mongoose.Schema({
@@ -12,7 +13,8 @@ const bookSchema = new mongoose.Schema({
     book_name: String,
     author: String,
     publish: String,
-    price: Number
+    price: Number,
+    class: String
 }, { collection: 'books' })
 
 module.exports = mongoose.model('book',bookSchema);

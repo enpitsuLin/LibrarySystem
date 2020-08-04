@@ -8,12 +8,12 @@ const mongoose = require('../db');
  * department 学院
  */
 const userSchema = mongoose.Schema({
-  user_id: Number,
-  username: String,
-  password: String,
-  identity: Number,
-  name: String,
-  department: String
+  user_id: { type: Number, required: true, unique: true },
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  identity: { type: Number, default: 1 },
+  name: { type: String, required: true },
+  department: { type: String }
 }, { versionKey: false }, { collection: 'users' })
 
 module.exports = mongoose.model('user', userSchema);

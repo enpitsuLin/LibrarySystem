@@ -5,9 +5,9 @@ const mongoose = require('../db');
  * borrow_date 借阅时间
  */
 const borrowSchema = mongoose.Schema({
-    user_id: Number,
-    book_id: Number,
-    borrow_date: Date
+    user_id: { type: Number, required: true },
+    book_id: { type: Number, required: true },
+    borrow_date: { type: Date, default: Date.now }
 }, { versionKey: false }, { collection: 'borrow' })
 
 module.exports = mongoose.model('borrow', borrowSchema);

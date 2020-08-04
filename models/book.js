@@ -11,14 +11,14 @@ const mongoose = require('../db');
  */
 
 const bookSchema = new mongoose.Schema({
-    book_id: Number,
-    title: String,
-    author: [String],
-    language: String,
-    publisher: String,
-    price: Number,
-    isbn: String,
-    class: String
+    book_id: { type: Number, required: true, unique: true },
+    title: { type: String, required: true },
+    author: { type: [String] },
+    language: { type: String, required: true, default: "zh-cn" },
+    publisher: { type: String },
+    price: { type: Number, required: true },
+    isbn: { type: String, required: true },
+    class: { type: String, required: true }
 }, { versionKey: false }, { collection: 'books' })
 
 module.exports = mongoose.model('book', bookSchema);

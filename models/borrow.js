@@ -7,7 +7,7 @@ const mongoose = require('../db');
 const borrowSchema = mongoose.Schema({
     user_id: { type: Number, required: true },
     book_id: { type: Number, required: true },
-    borrow_date: { type: Date, default: Date.now }
+    borrow_date: { type: Date, required: true, default: Date.now }
 }, { versionKey: false }, { collection: 'borrow' })
 
 module.exports = mongoose.model('borrow', borrowSchema);

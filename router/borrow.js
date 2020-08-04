@@ -2,28 +2,33 @@ const express = require("express");
 const router = express.Router();
 const Borrow = require('../models/borrow');
 
-router.get("/borrow", (req, res) => {
-    Borrow.find({})
-        .sort({ update_at: -1 })
-        .then(borrows => {
-            res.json(borrows);
-        })
-        .catch(err => {
-            console.log(2);
+router.get("/", (req, res) => {
+    searchObj = {};
+    if (JSON.stringify(req.query) != "{}") {
+        if (req.query["user_id"] != undefined)
+            searchObj.user_id = req.query["user_id"]
+        if (req.query["book_id"] != undefined)
+            searchObj.book_id = req.query["book_id"]
+    }
+    Borrow.find(searchObj, {}, (err, book) => {
+        if (err) {
             res.json(err);
-        });
+        } else {
+            res.json(book);
+        }
+    })
 });
 
-router.get("/borrow/count", (req, res) => {
+router.get("/count", (req, res) => {
     Borrow.countDocuments({})
-        .then(book =>{
+        .then(book => {
             res.json(book)
         }).catch(err => {
             res.json(err);
         });;
 })
 
-router.get("/borrow/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     Borrow.findById(req.params.id)
         .then(borrow => {
             res.json(borrow);
@@ -33,7 +38,7 @@ router.get("/borrow/:id", (req, res) => {
         });
 });
 
-router.post("/borrow", (req, res) => {
+router.post("/", (req, res) => {
     Borrow.create(req.body, (err, borrow) => {
         if (err) {
             res.json(err);
@@ -43,7 +48,7 @@ router.post("/borrow", (req, res) => {
     });
 });
 
-router.put("/borrow/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     Borrow.findOneAndUpdate(
         { _id: req.params.id },
         {
@@ -64,7 +69,7 @@ router.put("/borrow/:id", (req, res) => {
         .catch(err => res.json(err));
 });
 
-router.delete("/borrow/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     Borrow.findOneAndRemove({
         _id: req.params.id
     })

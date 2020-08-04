@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const book = require('./book');
-const user = require('./user');
 
-router.use('/book', book);
-router.use('/user', user);
+
+//绑定路由
+router.use('/book', require('./book'));
+router.use('/user', require('./user'));
+router.use('/borrow', require('./borrow'))
+
 
 module.exports = router;

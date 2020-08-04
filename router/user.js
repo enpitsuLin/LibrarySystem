@@ -7,31 +7,31 @@ const User = require("../models/user");
  * 
  * response: Array
  * 
- * 获得所有书籍：
+ * 获得所有用户：
  *     /api/user
  * 通过query参数检索：
- *     /api/user/?title=三国演义&author=罗贯中
+ *     /api/?
  */
-router.get("/user", (req, res) => {
-    searchObj ={};
-    if(JSON.stringify(req.query)!="{}"){
-        searchObj.user_id = req.query["user_id"];
-        searchObj.username = req.query["username"];
+router.get("/", (req, res) => {
+    searchObj = {};
+    if (JSON.stringify(req.query) != "{}") {
+        if (req.query["user_id"] != undefined)
+            searchObj.user_id = req.query["user_id"];
+        if (req.query["username"] != undefined)
+            searchObj.username = req.query["username"];
     }
-    User.find({})
-        .sort({ update_at: -1 })
-        .then(users => {
-            res.json(users);
-        })
-        .catch(err => {
-            console.log(2);
+    User.find(searchObj, {}, (err, book) => {
+        if (err) {
             res.json(err);
-        });
+        } else {
+            res.json(book);
+        }
+    })
 });
 /**
  * 获得用户计数
  */
-router.get("/user/count", (req, res) => {
+router.get("/count", (req, res) => {
     User.countDocuments({})
         .then(user => {
             res.json(user)
@@ -40,7 +40,7 @@ router.get("/user/count", (req, res) => {
         });;
 })
 
-router.get("/user/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     User.findById(req.params.id)
         .then(user => {
             res.json(user);
@@ -50,7 +50,7 @@ router.get("/user/:id", (req, res) => {
         });
 });
 
-router.post("/user", (req, res) => {
+router.post("/", (req, res) => {
     User.create(req.body, (err, user) => {
         if (err) {
             res.json(err);
@@ -60,7 +60,7 @@ router.post("/user", (req, res) => {
     });
 });
 
-router.put("/user/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     User.findOneAndUpdate(
         { _id: req.params.id },
         {
@@ -81,11 +81,11 @@ router.put("/user/:id", (req, res) => {
         .catch(err => res.json(err));
 });
 
-router.delete("/user/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     User.findOneAndRemove({
         _id: req.params.id
     })
-        .then(user => res.send(`${user.title}删除成功`))
+        .then(user => res.send(`${user.username}删除成功`))
         .catch(err => res.json(err));
 });
 

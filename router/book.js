@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Book = require("../models/book");
-const e = require("express");
 
 /**
  * 获得所有的书籍信息或按参数检索(book_id仅作排序与索引 不暴露)
@@ -11,9 +10,9 @@ const e = require("express");
  * 获得所有书籍：
  *     /api/book
  * 通过query参数检索：
- *     /api/book/?title=三国演义&author=罗贯中
+ *     /api/?title=三国演义&author=罗贯中
  */
-router.get("/book", (req, res) => {
+router.get("/", (req, res) => {
     searchObj = {};
     //console.log("查询对象为:" + req.query);
     if (JSON.stringify(req.query) != "{}") {
@@ -50,9 +49,9 @@ router.get("/book", (req, res) => {
  * response: Number
  * 
  * 书籍数：
- * /api/book/count
+ * /api/count
  */
-router.get("/book/count", (req, res) => {
+router.get("/count", (req, res) => {
     Book.countDocuments({})
         .then(book => {
             res.json(book)
@@ -65,9 +64,9 @@ router.get("/book/count", (req, res) => {
  * response: Obejct
  * 
  * 检索书籍:
- *  /api/book/5f242d3a3c93c83460b17d3d
+ *  /api/5f242d3a3c93c83460b17d3d
  */
-router.get("/book/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     Book.findById(req.params.id)
         .then(book => {
             res.json(book);
@@ -83,7 +82,7 @@ router.get("/book/:id", (req, res) => {
  * 通过post添加书籍
  *      /api/book
  */
-router.post("/book", (req, res) => {
+router.post("/", (req, res) => {
     console.log(req.body)
     Book.create(req.body, (err, book) => {
         if (err) {
@@ -94,7 +93,7 @@ router.post("/book", (req, res) => {
     });
 });
 
-router.put("/book/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     Book.findOneAndUpdate(
         { _id: req.params.id },
         {
@@ -119,7 +118,7 @@ router.put("/book/:id", (req, res) => {
         });
 });
 
-router.delete("/book/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     Book.findOneAndRemove({
         _id: req.params.id
     })

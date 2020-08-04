@@ -1,6 +1,5 @@
 /*  app.js */
 const express = require('express')
-const book = require('./router/book')
 const bodyParser = require("body-parser");
 
 const app = express()
@@ -10,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-app.use('/api', book)
+app.use('/api', require('./router/api'))
 
 //定义服务启动端口
 app.listen(3000, () => {

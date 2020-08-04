@@ -2,8 +2,22 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 
-
+/**
+ * 获得所有的用户信息或按参数检索
+ * 
+ * response: Array
+ * 
+ * 获得所有书籍：
+ *     /api/user
+ * 通过query参数检索：
+ *     /api/user/?title=三国演义&author=罗贯中
+ */
 router.get("/user", (req, res) => {
+    searchObj ={};
+    if(JSON.stringify(req.query)!="{}"){
+        searchObj.user_id = req.query["user_id"];
+        searchObj.username = req.query["username"];
+    }
     User.find({})
         .sort({ update_at: -1 })
         .then(users => {

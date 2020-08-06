@@ -1,7 +1,31 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
+/**
+ * 登录
+ * 
+ * response: JSON
+ * 
+ * 登录：
+ *     /api/user/login
+ */
+router.post("/login", (req, res) => {
+    data = req.body;
+    if (data.username != "" && data.password != "")
+        User.find({ username: data.username }, {}, (err, data) => {
+            if (err) {
+                res.json(err);
+            } else {
+                if (data.password == data.password) {
+                    res.json({ code: 1, status: "success" });
+                } else {
+                    res.json({ code: -1, status: "failure" });
+                }
+            }
+        });
 
+    ;
+});
 /**
  * 获得所有的用户信息或按参数检索
  * 

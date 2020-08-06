@@ -11,12 +11,13 @@ const User = require("../models/user");
  */
 router.post("/login", (req, res) => {
     data = req.body;
+
     if (data.username != "" && data.password != "")
-        User.find({ username: data.username }, {}, (err, data) => {
+        User.findOne({ username: data.username }, {}, (err, user) => {
             if (err) {
                 res.json(err);
             } else {
-                if (data.password == data.password) {
+                if (user.password == data.password) {
                     res.json({ code: 1, status: "success" });
                 } else {
                     res.json({ code: -1, status: "failure" });
